@@ -229,12 +229,19 @@ const CONTACTS = [
 
 function buildRecords(){
   const rows = [];
-  for(let i=1;i<=16;i++){
-    rows.push({sno:i, chassis:`AXCTRAT50HA26${i.toString().padStart(4,'0')}`, date:"JANUARY 2026"});
-  }
-  for(let i=17;i<=20;i++){
-    rows.push({sno:i, chassis:`AXCTRAT50HB26${i.toString().padStart(4,'0')}`, date:"FEBRUARY 2026"});
-  }
+  const ranges = [
+    [1, 16, "HA", "JANUARY 2026"],
+    [17, 20, "HB", "FEBRUARY 2026"],
+    [21, 30, "HC", "MARCH 2026"],
+    [31, 42, "HD", "APRIL 2026"],
+    [43, 52, "HE", "MAY 2026"],
+    [53, 62, "HF", "JUNE 2026"]
+  ];
+  ranges.forEach(([start, end, letter, date]) => {
+    for(let i = start; i <= end; i++){
+      rows.push({sno:i, chassis:`AXCTRAT50${letter}26${i.toString().padStart(4,'0')}`, date:date});
+    }
+  });
   return rows;
 }
 const RECORDS = buildRecords();
