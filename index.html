@@ -230,10 +230,10 @@ const CONTACTS = [
 function buildRecords(){
   const rows = [];
   for(let i=1;i<=16;i++){
-    rows.push({sno:i, chassis:`AXCTRAT50HA${(26000+i).toString().padStart(5,'0')}`, date:"JANUARY 2026"});
+    rows.push({sno:i, chassis:`AXCTRAT50HA26${i.toString().padStart(4,'0')}`, date:"JANUARY 2026"});
   }
   for(let i=17;i<=20;i++){
-    rows.push({sno:i, chassis:`AXCTRAT50HB${(26000+i).toString().padStart(5,'0')}`, date:"FEBRUARY 2026"});
+    rows.push({sno:i, chassis:`AXCTRAT50HB26${i.toString().padStart(4,'0')}`, date:"FEBRUARY 2026"});
   }
   return rows;
 }
