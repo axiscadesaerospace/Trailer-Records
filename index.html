@@ -220,6 +220,10 @@
 <script>
 const PLANT_ADDRESS = "Khasra No. 120/19 Tehsil Bahadurgarh, Rohad, Haryana 124501";
 const COMPANY_LINK = "https://www.axiscades.com/";
+const LANDLINES = [
+  {label:"Primary Board Line (TATA)", phone:"080 6529 6200"},
+  {label:"Secondary Board Line (JIO)", phone:"080 3539 6167"}
+];
 const CONTACTS = [
   {name:"Vivek G Menon", role:"Sr VP Defence Systems", email:"vivekg.menon@axis.aero", phone:""},
   {name:"Anantha PG", role:"DGM", email:"anantha.pg@axis.aero", phone:"+91 9448681683"},
@@ -265,6 +269,15 @@ function renderContacts(){
   `).join('');
 }
 
+function renderLandlines(){
+  return LANDLINES.map(l => `
+    <div class="contact-meta" style="margin-bottom:4px;">
+      <span style="color:var(--muted); font-family:'IBM Plex Sans', sans-serif; font-size:12.5px;">${esc(l.label)}:</span>
+      <a href="tel:${esc(l.phone.replace(/\s+/g,''))}">${esc(l.phone)}</a>
+    </div>
+  `).join('');
+}
+
 function renderRecord(rec){
   document.getElementById('card').innerHTML = `
     <p class="eyebrow">Trailer Chassis Dossier</p>
@@ -282,6 +295,10 @@ function renderRecord(rec){
     <div class="field">
       <p class="label">Plant Address</p>
       <p class="value">${esc(PLANT_ADDRESS)}</p>
+    </div>
+    <div class="field">
+      <p class="label">Company Landline</p>
+      ${renderLandlines()}
     </div>
     <hr class="rule">
     <p class="section-title">Contact in Case of Service</p>
