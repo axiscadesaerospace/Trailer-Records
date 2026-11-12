@@ -43,7 +43,10 @@
     align-items:center;
     justify-content:space-between;
     margin-bottom:16px;
-    padding:0 2px;
+    padding:14px 18px;
+    background:#F4F6F8;
+    border-radius:3px;
+    border:1px solid var(--rule);
   }
   .logo-bar img{
     display:block;
@@ -211,12 +214,16 @@
     <div class="card" id="card">
       <!-- populated by JS -->
     </div>
-    <div class="footer-note">AXISCADES DEFENCE SYSTEMS &mdash; TRAILER CHASSIS RECORD</div>
+    <div class="footer-note">AXISCADES AEROSPACE &amp; TECHNOLOGIES PVT LTD &mdash; TRAILER CHASSIS RECORD</div>
   </div>
 
 <script>
-const PLANT_ADDRESS = "PRV7+XR, Rohad, Haryana 124501";
+const PLANT_ADDRESS = "Khasra No. 120/19 Tehsil Bahadurgarh, Rohad, Haryana 124501";
 const COMPANY_LINK = "https://www.axiscades.com/";
+const LANDLINES = [
+  {label:"Primary Board Line (TATA)", phone:"080 6529 6200"},
+  {label:"Secondary Board Line (JIO)", phone:"080 3539 6167"}
+];
 const CONTACTS = [
   {name:"Vivek G Menon", role:"Sr VP Defence Systems", email:"vivekg.menon@axis.aero", phone:""},
   {name:"Anantha PG", role:"DGM", email:"anantha.pg@axis.aero", phone:"+91 9448681683"},
@@ -226,12 +233,20 @@ const CONTACTS = [
 
 function buildRecords(){
   const rows = [];
-  for(let i=1;i<=16;i++){
-    rows.push({sno:i, chassis:`AXCTRAT50HA${(26000+i).toString().padStart(5,'0')}`, date:"JANUARY 2026"});
-  }
-  for(let i=17;i<=20;i++){
-    rows.push({sno:i, chassis:`AXCTRAT50HB${(26000+i).toString().padStart(5,'0')}`, date:"FEBRUARY 2026"});
-  }
+  const ranges = [
+    [1, 16, "HA", "JANUARY 2026"],
+    [17, 20, "HB", "FEBRUARY 2026"],
+    [21, 30, "HC", "MARCH 2026"],
+    [31, 42, "HD", "APRIL 2026"],
+    [43, 52, "HE", "MAY 2026"],
+    [53, 72, "HF", "JUNE 2026"],
+    [73, 82, "HG", "JULY 2026"]
+  ];
+  ranges.forEach(([start, end, letter, date]) => {
+    for(let i = start; i <= end; i++){
+      rows.push({sno:i, chassis:`AXCTRAT50${letter}26${i.toString().padStart(4,'0')}`, date:date});
+    }
+  });
   return rows;
 }
 const RECORDS = buildRecords();
@@ -255,6 +270,15 @@ function renderContacts(){
   `).join('');
 }
 
+function renderLandlines(){
+  return LANDLINES.map(l => `
+    <div class="contact-meta" style="margin-bottom:4px;">
+      <span style="color:var(--muted); font-family:'IBM Plex Sans', sans-serif; font-size:12.5px;">${esc(l.label)}:</span>
+      <a href="tel:${esc(l.phone.replace(/\s+/g,''))}">${esc(l.phone)}</a>
+    </div>
+  `).join('');
+}
+
 function renderRecord(rec){
   document.getElementById('card').innerHTML = `
     <p class="eyebrow">Trailer Chassis Dossier</p>
@@ -272,6 +296,10 @@ function renderRecord(rec){
     <div class="field">
       <p class="label">Plant Address</p>
       <p class="value">${esc(PLANT_ADDRESS)}</p>
+    </div>
+    <div class="field">
+      <p class="label">Company Landline</p>
+      ${renderLandlines()}
     </div>
     <hr class="rule">
     <p class="section-title">Contact in Case of Service</p>
